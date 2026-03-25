@@ -1,16 +1,27 @@
 export type ItemStatus = 'wanted' | 'owned'
 
-export type ItemOption = {
+export interface ItemOption {
+  id: string
   store: string
   price: number
   url: string
 }
 
-export type Item = {
+export interface ReservedOption {
+  id: string
+  store: string
+  price: number
+  url: string
+}
+
+export interface Item {
   id: string
   name: string
   image: string
+  description: string
   status: ItemStatus
-  description?: string
   options: ItemOption[]
+  reserved: boolean
+  reservedBy: string | null
+  reservedOption: ReservedOption | null
 }

@@ -1,8 +1,10 @@
 import styles from './Header.module.css'
 
+type FilterValue = 'all' | 'wanted' | 'owned'
+
 type HeaderProps = {
-  filter: 'all' | 'wanted' | 'owned'
-  setFilter: (value: 'all' | 'wanted' | 'owned') => void
+  filter: FilterValue
+  setFilter: (value: FilterValue) => void
 }
 
 export default function Header({ filter, setFilter }: HeaderProps) {

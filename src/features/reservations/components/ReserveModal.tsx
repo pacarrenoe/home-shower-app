@@ -1,76 +1,131 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import styles from './ReserveModal.module.css'
 import type { ItemOption } from '../../items/types/item.types'
-import { createReservation } from '../services/reservation.service'
+import { useReserveItem } from '../hooks/useReserveItem'
 
 type Props = {
   isOpen: boolean
   onClose: () => void
-  options: ItemOption[]
+  itemId: string
   itemName: string
+  options: ItemOption[]
 }
 
 export default function ReserveModal({
   isOpen,
   onClose,
-  options,
+  itemId,
   itemName,
+  options,
 }: Props) {
   const [name, setName] = useState('')
-  const [selectedOption, setSelectedOption] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [selectedOptionId, setSelectedOptionId] = useState('')
+
+  const { handleReserve, loading, error, clearError } = useReserveItem()
+
+  const selectedOption = useMemo(
+    () => options.find((option) => option.id === selectedOptionId) ?? null,
+    [options, selectedOptionId],
+  )
+
+  useEffect(() => {
+    if (!isOpen) {
+      setName('')
+      setSelectedOptionId('')
+      clearError()
+    }
+  }, [isOpen, clearError])
 
   if (!isOpen) return null
 
-  const handleSubmit = async () => {
-    setLoading(true)
+  const submitReservation = async () => {
+    if (!name.trim() || !selectedOption) return
 
-    await createReservation({
-      name,
-      itemName,
-      optionId: selectedOption,
-    })
+    const ok = await handleReserve(itemId, name.trim(), selectedOption)
 
-    setLoading(false)
+    if (!ok) return
+
     onClose()
   }
 
   return (
-    <div className={styles.overlay}>
+    <div className={styles.overlay} role="dialog" aria-modal="true" aria-labelledby="reserve-title">
       <div className={styles.modal}>
-        <h2>Regalar: {itemName}</h2>
-
-        <input
-          placeholder="Tu nombre"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-
-        <div className={styles.options}>
-          {options.map((opt) => (
-            <label key={opt.id} className={styles.option}>
-              <input
-                type="radio"
-                name="option"
-                value={opt.id}
-                onChange={() => setSelectedOption(opt.id)}
-              />
-              {opt.store} ${opt.price.toLocaleString('es-CL')}
-            </label>
-          ))}
+        <div className={styles.header}>
+          <h2 id="reserve-title" className={styles.title}>
+            Yo te lo regalaré
+          </h2>
+          <p className={styles.subtitle}>{itemName}</p>
         </div>
 
-        <button
-          disabled={!name || !selectedOption || loading}
-          className={styles.confirm}
-          onClick={handleSubmit}
-        >
-          {loading ? 'Guardando...' : 'Confirmar regalo'}
-        </button>
+        <div className={styles.field}>
+          <label htmlFor="guest-name" className={styles.label}>
+            Tu nombre
+          </label>
+          <input
+            id="guest-name"
+            className={styles.input}
+            type="text"
+            placeholder="Escribe tu nombre"
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+          />
+        </div>
 
-        <button className={styles.cancel} onClick={onClose}>
-          Cancelar
-        </button>
+        <div className={styles.field}>
+          <span className={styles.label}>Elige una opción</span>
+
+          <div className={styles.options}>
+            {options.map((option) => {
+              const active = selectedOptionId === option.id
+
+              return (
+                <label
+                  key={option.id}
+                  className={`${styles.option} ${active ? styles.optionActive : ''}`}
+                >
+                  <input
+                    className={styles.radio}
+                    type="radio"
+                    name="gift-option"
+                    value={option.id}
+                    checked={active}
+                    onChange={() => setSelectedOptionId(option.id)}
+                  />
+
+                  <span className={styles.optionText}>
+                    <span className={styles.optionStore}>{option.store}</span>
+                    <span className={styles.optionPrice}>
+                      ${option.price.toLocaleString('es-CL')}
+                    </span>
+                  </span>
+                </label>
+              )
+            })}
+          </div>
+        </div>
+
+        {error ? <p className={styles.error}>{error}</p> : null}
+
+        <div className={styles.actions}>
+          <button
+            type="button"
+            className={styles.cancel}
+            onClick={onClose}
+            disabled={loading}
+          >
+            Cancelar
+          </button>
+
+          <button
+            type="button"
+            className={styles.confirm}
+            onClick={submitReservation}
+            disabled={loading || !name.trim() || !selectedOption}
+          >
+            {loading ? 'Guardando...' : 'Confirmar regalo'}
+          </button>
+        </div>
       </div>
     </div>
   )

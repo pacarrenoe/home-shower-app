@@ -1,39 +1,101 @@
 :root {
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   color: #111827;
-  background-color: #f3f4f6;
+  background-color: #f9fafb;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-* {
+/* =========================
+   RESET / NORMALIZE
+   ========================= */
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
-html {
-  font-size: 16px;
+* {
+  margin: 0;
 }
 
-html,
+html {
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+
 body,
 #root {
   min-height: 100%;
-  margin: 0;
 }
 
 body {
   min-height: 100vh;
 }
 
-img {
+/* Tipografía consistente */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+}
+
+p {
+  line-height: 1.6;
+}
+
+/* Listas sin estilos por defecto */
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+}
+
+/* Links */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Imágenes y media */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
   max-width: 100%;
 }
 
+/* Formularios */
 button,
 input,
 textarea,
 select {
   font: inherit;
+  border: none;
+  outline: none;
+  background: none;
+}
+
+/* Botones accesibles */
+button {
+  cursor: pointer;
+}
+
+/* Tablas */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Evita overflow raro */
+#root {
+  isolation: isolate;
 }
