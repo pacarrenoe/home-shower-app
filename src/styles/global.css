@@ -25,6 +25,7 @@
 html {
   line-height: 1.5;
   -webkit-text-size-adjust: 100%;
+  font-size: 10px;
 }
 
 body,

@@ -24,14 +24,14 @@
 
 .title {
   margin: 0 0 0.35rem;
-  font-size: 1.4rem;
+  font-size: 15px;
   font-weight: 800;
   color: #111827;
 }
 
 .subtitle {
   margin: 0;
-  font-size: 0.95rem;
+  font-size: 15px;
   color: #6b7280;
 }
 
@@ -43,7 +43,7 @@
 }
 
 .label {
-  font-size: 0.92rem;
+  font-size: 15px;
   font-weight: 700;
   color: #111827;
 }
@@ -93,20 +93,20 @@
 }
 
 .optionStore {
-  font-size: 0.95rem;
+  font-size: 15px;
   font-weight: 700;
   color: #111827;
 }
 
 .optionPrice {
-  font-size: 0.9rem;
+  font-size: 15px;
   color: #2563eb;
   font-weight: 700;
 }
 
 .error {
   margin: 0 0 1rem;
-  font-size: 0.9rem;
+  font-size: 15px;
   color: #dc2626;
   font-weight: 600;
 }
