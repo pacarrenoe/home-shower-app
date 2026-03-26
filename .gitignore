@@ -27,4 +27,3 @@ dist-ssr
 # secrets
 *.json
 serviceAccountKey.json
-.env
