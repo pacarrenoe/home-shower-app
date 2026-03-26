@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import styles from './AdminItemModal.module.css'
 import type { Item, ItemOption } from '../types/item.types'
+import { uploadImage } from '../services/upload.service'
 
 type Props = {
   isOpen: boolean
@@ -101,7 +102,7 @@ export default function AdminItemModal({
       }))
       .filter((option) => option.store && option.url)
 
-    if (!name.trim() || !image.trim()) return
+    if (!name.trim()) return
 
     setLoading(true)
 
@@ -137,12 +138,31 @@ export default function AdminItemModal({
             onChange={(event) => setName(event.target.value)}
           />
 
-          <input
-            className={styles.input}
-            placeholder="URL imagen"
-            value={image}
-            onChange={(event) => setImage(event.target.value)}
-          />
+          <div className={styles.block}>
+            <label className={styles.fileInput}>
+              Subir imagen
+              <input
+                type="file"
+                accept="image/*"
+                style={{ display: 'none' }}
+                onChange={async (e) => {
+                  const file = e.target.files?.[0]
+                  if (!file) return
+
+                  setLoading(true)
+
+                  try {
+                    const url = await uploadImage(file)
+                    setImage(url)
+                  } finally {
+                    setLoading(false)
+                  }
+                }}
+              />
+            </label>
+
+            {image && <img src={image} className={styles.preview} />}
+          </div>
 
           <textarea
             className={styles.textarea}

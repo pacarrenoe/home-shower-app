@@ -11,6 +11,9 @@ import {
 import { db } from '../../../app/firebase'
 import type { ItemOption } from '../types/item.types'
 
+// ✅ NUEVO (no rompe nada)
+import { sendReservationEmail } from '../../reservations/services/email.service'
+
 interface ReserveItemParams {
   itemId: string
   name: string
@@ -24,6 +27,7 @@ export const reserveItem = async ({
 }: ReserveItemParams) => {
   const itemRef = doc(db, 'items', itemId)
 
+  // 🔥 TRANSACTION (NO TOCAR)
   await runTransaction(db, async (transaction) => {
     const snap = await transaction.get(itemRef)
 
@@ -44,17 +48,34 @@ export const reserveItem = async ({
     })
   })
 
+  // 🔥 DATA ACTUALIZADA
   const snap = await getDoc(itemRef)
   const data = snap.data()
 
+  const itemName = data?.name ?? ''
+
+  // 🔥 RESERVATION (NO TOCAR)
   await addDoc(collection(db, 'reservations'), {
     itemId,
-    itemName: data?.name ?? '',
+    itemName,
     name,
     option,
     createdAt: serverTimestamp(),
   })
+
+  // ✅ NUEVO → EMAIL (NO AFECTA NADA SI FALLA)
+  try {
+    await sendReservationEmail({
+      name,
+      itemName,
+      option,
+    })
+  } catch (error) {
+    console.error('Error enviando email:', error)
+  }
 }
+
+// TODO LO DEMÁS SE MANTIENE IGUAL 👇
 
 export const createItem = async (data: {
   name: string
