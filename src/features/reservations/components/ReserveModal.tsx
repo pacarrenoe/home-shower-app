@@ -1,151 +1,134 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import styles from './ReserveModal.module.css'
-import type { ItemOption } from '../../items/types/item.types'
+import type { Item } from '../../items/types/item.types'
 import { useReserveItem } from '../hooks/useReserveItem'
 
 type Props = {
   isOpen: boolean
   onClose: () => void
-  itemId: string
-  itemName: string
-  options: ItemOption[]
+  item: Item | null
 }
 
-export default function ReserveModal({
-  isOpen,
-  onClose,
-  itemId,
-  itemName,
-  options,
-}: Props) {
+export default function ReserveModal({ isOpen, onClose, item }: Props) {
+  const [selectedOption, setSelectedOption] = useState<string>('')
   const [name, setName] = useState('')
-  const [selectedOptionId, setSelectedOptionId] = useState('')
 
   const { handleReserve, loading, error, clearError } = useReserveItem()
 
-  const selectedOption = useMemo(
-    () => options.find((option) => option.id === selectedOptionId) ?? null,
-    [options, selectedOptionId],
-  )
+  const formatCLP = (value: number) =>
+    new Intl.NumberFormat('es-CL', {
+      style: 'currency',
+      currency: 'CLP',
+      maximumFractionDigits: 0,
+    }).format(value)
 
-  // reset estado
-  useEffect(() => {
-    if (!isOpen) {
+  const sortedOptions = useMemo(() => {
+    if (!item) return []
+    return [...item.options].sort((a, b) => a.price - b.price)
+  }, [item])
+
+  const cheapest = sortedOptions[0]
+
+  if (!isOpen || !item) return null
+
+  const handleSubmit = async () => {
+    const option = item.options.find(o => o.id === selectedOption)
+    if (!option || !name.trim()) return
+
+    const success = await handleReserve(item.id, name, option)
+
+    if (success) {
+      setSelectedOption('')
       setName('')
-      setSelectedOptionId('')
       clearError()
+      onClose()
     }
-  }, [isOpen, clearError])
-
-  // bloquear scroll del fondo
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
-
-    return () => {
-      document.body.style.overflow = ''
-    }
-  }, [isOpen])
-
-  // cerrar con ESC
-  useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
-    }
-
-    if (isOpen) {
-      window.addEventListener('keydown', handleKey)
-    }
-
-    return () => window.removeEventListener('keydown', handleKey)
-  }, [isOpen, onClose])
-
-  if (!isOpen) return null
-
-  const submitReservation = async () => {
-    if (!name.trim() || !selectedOption) return
-
-    const ok = await handleReserve(itemId, name.trim(), selectedOption)
-
-    if (!ok) return
-
-    onClose()
   }
 
   return (
-    <div
-      className={styles.overlay}
-      onClick={onClose}
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="reserve-title"
-    >
-      <div
-        className={styles.modal}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className={styles.header}>
-          <h2 id="reserve-title" className={styles.title}>
-            Yo te lo regalaré
-          </h2>
-          <p className={styles.subtitle}>{itemName}</p>
-        </div>
+    <div className={styles.overlay} onClick={onClose}>
+      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+        <h2 className={styles.title}>
+          ¡Gracias por tu regalo! 🎁
+        </h2>
 
-        <div className={styles.field}>
-          <label htmlFor="guest-name" className={styles.label}>
-            Tu nombre
-          </label>
-          <input
-            id="guest-name"
-            className={styles.input}
-            type="text"
-            placeholder="Escribe tu nombre"
-            value={name}
-            onChange={(event) => setName(event.target.value)}
-          />
-        </div>
+        <p className={styles.subtitle}>
+          Estás reservando:{' '}
+          <b style={{ color: '#000' }}>{item.name}</b>. <br />
+          Contamos con ello, así que si más adelante no puedes,
+          avísanos, no hay problema.
+        </p>
 
-        <div className={styles.field}>
-          <span className={styles.label}>Elige una opción</span>
+        {/* 🔥 Si ya está reservado */}
+        {item.reserved && (
+          <p style={{ color: '#10b981', fontWeight: 600, textAlign: 'center' }}>
+            Este regalo ya fue reservado por {item.reservedBy}
+          </p>
+        )}
 
+        {/* Opciones */}
+        {!item.reserved && (
           <div className={styles.options}>
-            {options.map((option) => {
-              const active = selectedOptionId === option.id
+            {sortedOptions.map((opt) => {
+              const isCheapest = opt.id === cheapest?.id
+              const ahorro = opt.price - (cheapest?.price || 0)
 
               return (
                 <label
-                  key={option.id}
-                  className={`${styles.option} ${active ? styles.optionActive : ''}`}
+                  key={opt.id}
+                  className={`${styles.option} ${
+                    selectedOption === opt.id ? styles.active : ''
+                  }`}
                 >
                   <input
-                    className={styles.radio}
                     type="radio"
-                    name="gift-option"
-                    value={option.id}
-                    checked={active}
-                    onChange={() => setSelectedOptionId(option.id)}
+                    name="option"
+                    value={opt.id}
+                    checked={selectedOption === opt.id}
+                    onChange={() => setSelectedOption(opt.id)}
                   />
 
-                  <span className={styles.optionText}>
-                    <span className={styles.optionStore}>{option.store}</span>
-                    <span className={styles.optionPrice}>
-                      ${option.price.toLocaleString('es-CL')}
-                    </span>
+                  <span className={styles.store}>{opt.store}</span>
+
+                  <span className={styles.price}>
+                    {formatCLP(opt.price)}
                   </span>
+
+                  {isCheapest && (
+                    <span className={styles.badge}>Más barato</span>
+                  )}
+
+                  {!isCheapest && (
+                    <span className={styles.saving}>
+                      +{formatCLP(ahorro)}
+                    </span>
+                  )}
                 </label>
               )
             })}
           </div>
-        </div>
+        )}
 
-        {error && <p className={styles.error}>{error}</p>}
+        {/* Input */}
+        {!item.reserved && (
+          <input
+            className={styles.input}
+            placeholder="Tu nombre"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        )}
 
+        {/* Error */}
+        {error && (
+          <p style={{ color: '#ef4444', fontSize: 12, textAlign: 'center' }}>
+            {error}
+          </p>
+        )}
+
+        {/* Actions */}
         <div className={styles.actions}>
           <button
-            type="button"
             className={styles.cancel}
             onClick={onClose}
             disabled={loading}
@@ -153,14 +136,15 @@ export default function ReserveModal({
             Cancelar
           </button>
 
-          <button
-            type="button"
-            className={styles.confirm}
-            onClick={submitReservation}
-            disabled={loading || !name.trim() || !selectedOption}
-          >
-            {loading ? 'Guardando...' : 'Confirmar regalo'}
-          </button>
+          {!item.reserved && (
+            <button
+              className={styles.confirm}
+              onClick={handleSubmit}
+              disabled={!selectedOption || !name.trim() || loading}
+            >
+              {loading ? 'Reservando...' : 'Reservar'}
+            </button>
+          )}
         </div>
       </div>
     </div>

@@ -44,9 +44,7 @@ export default function Home() {
       <ReserveModal
         isOpen={Boolean(selectedItem)}
         onClose={() => setSelectedItem(null)}
-        itemId={selectedItem?.id ?? ''}
-        itemName={selectedItem?.name ?? ''}
-        options={selectedItem?.options ?? []}
+        item={selectedItem}
       />
     </main>
   )

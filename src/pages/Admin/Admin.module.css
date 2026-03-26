@@ -85,6 +85,7 @@
   font-weight: 500;
   color: #7f93af;
   margin-bottom: 10px;
+  text-align: center;
 }
 
 .kpiValue {
@@ -93,6 +94,7 @@
   line-height: 1;
   font-weight: 600;
   color: #f8fbff;
+  text-align: center;
 }
 
 .sectionHeader {
@@ -296,6 +298,12 @@
 
   .title {
     font-size: 30px;
+    text-align: center;
+
+  }
+
+   .subtitle {
+    text-align: center;
   }
 }
 
@@ -312,10 +320,12 @@
 
   .title {
     font-size: 28px;
+    text-align: center;
   }
 
   .subtitle {
     font-size: 14px;
+    text-align: center;
   }
 
   .logoutButton {
@@ -349,6 +359,11 @@
 
   .sectionTitle {
     font-size: 22px;
+    text-align: center;
+  }
+
+  .sectionSubtitle {
+     text-align: center;
   }
 
   .primaryButton {

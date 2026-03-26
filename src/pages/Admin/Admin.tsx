@@ -131,7 +131,7 @@ export default function Admin() {
             className={styles.primaryButton}
             onClick={openCreate}
           >
-            + Nuevo artículo
+            Agregar artículo
           </button>
         </div>
 

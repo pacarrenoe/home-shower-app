@@ -1,143 +1,176 @@
+/* =========================
+   OVERLAY
+========================= */
 .overlay {
   position: fixed;
   inset: 0;
-  z-index: 999;
+  background: rgba(37, 44, 62, 0.778);
+  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(17, 24, 39, 0.45);
+  z-index: 999;
+  padding: 16px;
 }
 
+/* =========================
+   MODAL
+========================= */
 .modal {
   width: 100%;
-  max-width: 500px;
+  max-width: 480px;
   max-height: 90vh;
-  border-radius: 20px;
-  background: #ffffff;
-  padding: 18px 25px;
-  box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.2);
   overflow-y: auto;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  padding: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.2s ease;
 }
 
-.header {
-  margin-bottom: 1rem;
-}
-
+/* =========================
+   TITLE
+========================= */
 .title {
-  margin: 0 0 0.25rem;
   font-size: 18px;
-  text-align: center;
   font-weight: 600;
+  text-align: center;
   color: #111827;
 }
 
 .subtitle {
-  margin: 0;
-  font-size: 12px;
+  font-size: 14px;
   text-align: center;
-  color: #6b7280;
+  margin: 10px 0;
+  color: #4b5563;
 }
 
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  margin-bottom: 1rem;
-}
-
-.label {
-  font-size: 12px;
-  font-weight: 600;
-  color: #111827;
-}
-
-.input {
-  width: 100%;
-  border: 1px solid #d1d5db;
-  border-radius: 12px;
-  padding: 0.75rem 0.9rem;
-  font-size: 12px;
-}
-
-.input:focus {
-  border-color: #10b981;
-  outline: none;
-}
-
+/* =========================
+   OPTIONS
+========================= */
 .options {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
-  margin-bottom: 1rem;
+  gap: 8px;
+  margin-bottom: 16px;
 }
 
+/* =========================
+   OPTION (ONE LINE ALWAYS)
+========================= */
 .option {
-  display: flex;
-  gap: 0.6rem;
+  display: grid;
+  grid-template-columns: 20px 1fr auto auto;
   align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  min-height: 44px;
+  border-radius: 10px;
+  background: #f9fafb;
   border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 0.7rem 0.85rem;
   cursor: pointer;
-}
-
-.optionActive {
-  border-color: #10b981;
-  background: #ecfdf5;
+  transition: all 0.2s ease;
 }
 
 .option:hover {
+  background: #ecfdf5;
+}
+
+.active {
   border: 1px solid #10b981;
+  background: #ecfdf5;
 }
 
-
-
-.radio {
-  transform: scale(1.1);
-}
-
-.optionText {
-  display: flex;
-}
-
-.optionStore {
-  font-size: 12px;
+/* =========================
+   TEXT CONTROL
+========================= */
+.store {
   font-weight: 600;
+  font-size: 14px;
+  color: #111827;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.optionPrice {
-  font-size: 12px;
-  color: #2563eb;
+.price {
   font-weight: 600;
-  margin-left: 10px;
+  font-size: 14px;
+  color: #059669;
+  white-space: nowrap;
 }
 
-.error {
-  margin-bottom: 1rem;
-  font-size: 12px;
-  color: #dc2626;
+/* =========================
+   BADGES
+========================= */
+.badge {
+  font-size: 11px;
+  background: #10b981;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 6px;
   font-weight: 600;
+  white-space: nowrap;
+  justify-self: end;
 }
 
-/* BOTONES MOBILE */
+.saving {
+  font-size: 11px;
+  color: #ef4444;
+  font-weight: 600;
+  white-space: nowrap;
+  justify-self: end;
+}
+
+/* =========================
+   INPUT
+========================= */
+.input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+/* =========================
+   ACTIONS
+========================= */
 .actions {
-  position: sticky;
-  bottom: 0;
-  background: #ffffff;
-  padding-top: 0.5rem;
   display: flex;
-  gap: 0.5rem;
+  gap: 10px;
+}
+
+/* 🔒 MANTENIDO EXACTO */
+.cancel {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 12px;
 }
 
 .confirm {
   flex: 1;
-  border: none;
-  border-radius: 12px;
+  padding: 10px;
+  border-radius: 10px;
   background: #10b981;
-  color: #ffffff;
-  padding: 0.85rem;
+  color: white;
+  border: none;
+  cursor: pointer;
   font-weight: 600;
+  transition: 0.2s;
   font-size: 12px;
+}
+
+.confirm:hover {
+  background: #059669;
 }
 
 .confirm:disabled {
@@ -145,37 +178,72 @@
   cursor: not-allowed;
 }
 
-
-.cancel {
-  flex: 1;
-  border: 1px solid #d1d5db;
-  border-radius: 12px;
-  background: #ffffff;
-  padding: 0.85rem;
-  font-weight: 600;
-  font-size: 12px;
-}
-
-/* 🔥 DESKTOP */
-@media (max-width: 768px) {
+/* =========================
+   MOBILE (MISMA FILA 🔥)
+========================= */
+@media (max-width: 480px) {
   .overlay {
-    align-items: center;
+    align-items: flex-end;
+    padding: 0;
   }
 
   .modal {
-    max-width: 350px;
-    border-radius: 20px;
-    padding: 18px 25px;
-    max-height: unset;
+    max-width: 100%;
+    width: 100%;
+    border-radius: 16px 16px 0 0;
+    padding: 16px;
+    animation: slideUp 0.25s ease;
   }
 
-  .actions {
-    position: static;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+  /* 🔥 SOLO reducimos tipografía, NO cambiamos layout */
+  .store {
+    font-size: 13px;
+  }
+
+  .price {
+    font-size: 13px;
+  }
+
+  .badge,
+  .saving {
+    font-size: 10px;
   }
 
   .option {
-    padding: 0.85rem 1rem;
+    padding: 10px;
+    gap: 6px;
+  }
+
+  /* botones vertical en mobile */
+  .actions {
+    flex-direction: column;
+  }
+
+  .cancel,
+  .confirm {
+    width: 100%;
+  }
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
   }
 }

@@ -11,8 +11,8 @@ export default function Header({ filter, setFilter }: HeaderProps) {
   return (
     <header className={styles.header}>
       <div className={styles.brand}>
-        <h1 className={styles.title}>Home Shower ✨</h1>
-        <p className={styles.subtitle}>Ayúdanos a armar nuestro nuevo hogar</p>
+        <h1 className={styles.title}> Home Shower N&P ✨</h1>
+        <p className={styles.subtitle}>Ayúdanos a armar nuestro nuevo hogar, cada granito cuenta 🌻</p>
       </div>
 
       <div className={styles.filters} role="tablist" aria-label="Filtros de artículos">
