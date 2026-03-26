@@ -1,0 +1,249 @@
+/* =========================
+   OVERLAY
+========================= */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(37, 44, 62, 0.778);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  padding: 16px;
+}
+
+/* =========================
+   MODAL
+========================= */
+.modal {
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  padding: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.2s ease;
+}
+
+/* =========================
+   TITLE
+========================= */
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  color: #111827;
+}
+
+.subtitle {
+  font-size: 14px;
+  text-align: center;
+  margin: 10px 0;
+  color: #4b5563;
+}
+
+/* =========================
+   OPTIONS
+========================= */
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+/* =========================
+   OPTION (ONE LINE ALWAYS)
+========================= */
+.option {
+  display: grid;
+  grid-template-columns: 20px 1fr auto auto;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  min-height: 44px;
+  border-radius: 10px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.option:hover {
+  background: #ecfdf5;
+}
+
+.active {
+  border: 1px solid #10b981;
+  background: #ecfdf5;
+}
+
+/* =========================
+   TEXT CONTROL
+========================= */
+.store {
+  font-weight: 600;
+  font-size: 14px;
+  color: #111827;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.price {
+  font-weight: 600;
+  font-size: 14px;
+  color: #059669;
+  white-space: nowrap;
+}
+
+/* =========================
+   BADGES
+========================= */
+.badge {
+  font-size: 11px;
+  background: #10b981;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-weight: 600;
+  white-space: nowrap;
+  justify-self: end;
+}
+
+.saving {
+  font-size: 11px;
+  color: #ef4444;
+  font-weight: 600;
+  white-space: nowrap;
+  justify-self: end;
+}
+
+/* =========================
+   INPUT
+========================= */
+.input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+/* =========================
+   ACTIONS
+========================= */
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* 🔒 MANTENIDO EXACTO */
+.cancel {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.confirm {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  background: #10b981;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+  font-size: 12px;
+}
+
+.confirm:hover {
+  background: #059669;
+}
+
+.confirm:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* =========================
+   MOBILE (MISMA FILA 🔥)
+========================= */
+@media (max-width: 480px) {
+  .overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .modal {
+    max-width: 100%;
+    width: 100%;
+    border-radius: 16px 16px 0 0;
+    padding: 16px;
+    animation: slideUp 0.25s ease;
+  }
+
+  /* 🔥 SOLO reducimos tipografía, NO cambiamos layout */
+  .store {
+    font-size: 13px;
+  }
+
+  .price {
+    font-size: 13px;
+  }
+
+  .badge,
+  .saving {
+    font-size: 10px;
+  }
+
+  .option {
+    padding: 10px;
+    gap: 6px;
+  }
+
+  /* botones vertical en mobile */
+  .actions {
+    flex-direction: column;
+  }
+
+  .cancel,
+  .confirm {
+    width: 100%;
+  }
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,26 @@
+.page {
+  min-height: 100vh;
+  background: #f3f4f6;
+}
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
