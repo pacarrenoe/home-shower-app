@@ -1,10 +1,12 @@
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   runTransaction,
   serverTimestamp,
+  updateDoc,
 } from 'firebase/firestore'
 import { db } from '../../../app/firebase'
 import type { ItemOption } from '../types/item.types'
@@ -42,7 +44,6 @@ export const reserveItem = async ({
     })
   })
 
-  // histórico (fuera de transaction)
   const snap = await getDoc(itemRef)
   const data = snap.data()
 
@@ -52,5 +53,64 @@ export const reserveItem = async ({
     name,
     option,
     createdAt: serverTimestamp(),
+  })
+}
+
+export const createItem = async (data: {
+  name: string
+  image: string
+  description: string
+  status: 'wanted' | 'owned'
+  options: ItemOption[]
+}) => {
+  return addDoc(collection(db, 'items'), {
+    ...data,
+    reserved: false,
+    reservedBy: null,
+    reservedOption: null,
+    createdAt: serverTimestamp(),
+  })
+}
+
+export const updateItem = async (
+  id: string,
+  data: Partial<{
+    name: string
+    image: string
+    description: string
+    status: 'wanted' | 'owned'
+    options: ItemOption[]
+    reserved: boolean
+    reservedBy: string | null
+    reservedOption: ItemOption | null
+  }>,
+) => {
+  return updateDoc(doc(db, 'items', id), data)
+}
+
+export const deleteItem = async (id: string) => {
+  return deleteDoc(doc(db, 'items', id))
+}
+
+export const markAsOwned = async (id: string) => {
+  return updateDoc(doc(db, 'items', id), {
+    status: 'owned',
+    reserved: false,
+    reservedBy: null,
+    reservedOption: null,
+  })
+}
+
+export const resetReservation = async (id: string) => {
+  return updateDoc(doc(db, 'items', id), {
+    reserved: false,
+    reservedBy: null,
+    reservedOption: null,
+  })
+}
+
+export const markAsWanted = async (id: string) => {
+  return updateDoc(doc(db, 'items', id), {
+    status: 'wanted',
   })
 }

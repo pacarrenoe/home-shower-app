@@ -1,0 +1,389 @@
+.page {
+  background: #0f172a; /* fondo oscuro */
+  min-height: 100vh;
+  padding: 24px;
+  color: #e5e7eb;
+}
+
+.shell {
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* HEADER */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #f9fafb;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #94a3b8;
+}
+
+/* BOTONES */
+.primaryButton {
+  background: #22c55e;
+  color: #022c22;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.logoutButton {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* KPIs */
+.kpiGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.kpiCard {
+  background: #1e293b;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.kpiCard span {
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+.kpiCard strong {
+  font-size: 22px;
+  color: #f9fafb;
+}
+
+/* GRID */
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+/* CARD */
+.card {
+  background: #1e293b;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+/* IMAGE */
+.imageWrapper {
+  position: relative;
+  height: 150px;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* BADGE */
+.badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-weight: 700;
+}
+
+.badgeAvailable {
+  background: #0ea5e9;
+  color: white;
+}
+
+.badgeReserved {
+  background: #f59e0b;
+  color: #111827;
+}
+
+.badgeOwned {
+  background: #22c55e;
+  color: #022c22;
+}
+
+/* BODY */
+.cardBody {
+  padding: 12px;
+}
+
+.cardBody h3 {
+  font-size: 15px;
+  margin: 0;
+  color: #f9fafb;
+}
+
+.cardBody p {
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+/* ACTIONS */
+.cardActions {
+  padding: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.cardActions button {
+  font-size: 12px;
+  border: none;
+  padding: 6px;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #334155;
+  color: #e5e7eb;
+}
+
+.cardActions button:hover {
+  background: #475569;
+}
+
+.danger {
+  background: #ef4444 !important;
+  color: white;
+}
+
+.empty {
+  text-align: center;
+  padding: 40px;
+  color: #94a3b8;
+}
+
+
+.page {
+  background: #0b1220;
+  min-height: 100vh;
+  padding: 24px;
+  color: #e2e8f0;
+}
+
+.shell {
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* HEADER */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 800;
+  color: #f8fafc;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #94a3b8;
+}
+
+/* BOTONES */
+.primaryButton {
+  background: #22c55e;
+  color: #022c22;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.logoutButton {
+  background: #1e293b;
+  color: #e2e8f0;
+  border: 1px solid #334155;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* KPI FIX */
+.kpiGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.kpiCard {
+  background: #111827;
+  border: 1px solid #1f2937;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.kpiCard span {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.kpiCard strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 26px;
+  font-weight: 800;
+  color: #f8fafc;
+}
+
+/* GRID */
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 18px;
+}
+
+/* CARD */
+.card {
+  background: #111827;
+  border: 1px solid #1f2937;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* IMAGE */
+.imageWrapper {
+  position: relative;
+  height: 160px;
+  background: #020617;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* BADGE */
+.badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+.badgeAvailable {
+  background: #0284c7;
+  color: white;
+}
+
+.badgeReserved {
+  background: #f59e0b;
+  color: #111827;
+}
+
+.badgeOwned {
+  background: #16a34a;
+  color: #022c22;
+}
+
+/* BODY */
+.cardBody {
+  padding: 14px;
+}
+
+.cardBody h3 {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.cardBody p {
+  font-size: 13px;
+  color: #94a3b8;
+  margin-top: 4px;
+}
+
+/* ACTIONS MEJORADOS */
+.cardActions {
+  padding: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+/* BOTONES SISTEMA */
+.cardActions button {
+  font-size: 12px;
+  border: none;
+  padding: 7px;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #1f2937;
+  color: #e2e8f0;
+  transition: 0.2s;
+}
+
+.cardActions button:hover {
+  background: #334155;
+}
+
+/* BOTÓN PRINCIPAL (acción importante) */
+.cardActions button:nth-child(1) {
+  background: #2563eb;
+  color: white;
+}
+
+/* DELETE AISLADO */
+.danger {
+  grid-column: span 2;
+  background: #ef4444 !important;
+  color: white;
+}
+
+.empty {
+  text-align: center;
+  padding: 40px;
+  color: #94a3b8;
+}

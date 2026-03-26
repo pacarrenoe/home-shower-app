@@ -28,6 +28,7 @@ export default function ReserveModal({
     [options, selectedOptionId],
   )
 
+  // reset estado
   useEffect(() => {
     if (!isOpen) {
       setName('')
@@ -35,6 +36,32 @@ export default function ReserveModal({
       clearError()
     }
   }, [isOpen, clearError])
+
+  // bloquear scroll del fondo
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isOpen])
+
+  // cerrar con ESC
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    }
+
+    if (isOpen) {
+      window.addEventListener('keydown', handleKey)
+    }
+
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [isOpen, onClose])
 
   if (!isOpen) return null
 
@@ -49,8 +76,17 @@ export default function ReserveModal({
   }
 
   return (
-    <div className={styles.overlay} role="dialog" aria-modal="true" aria-labelledby="reserve-title">
-      <div className={styles.modal}>
+    <div
+      className={styles.overlay}
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="reserve-title"
+    >
+      <div
+        className={styles.modal}
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className={styles.header}>
           <h2 id="reserve-title" className={styles.title}>
             Yo te lo regalaré
@@ -105,7 +141,7 @@ export default function ReserveModal({
           </div>
         </div>
 
-        {error ? <p className={styles.error}>{error}</p> : null}
+        {error && <p className={styles.error}>{error}</p>}
 
         <div className={styles.actions}>
           <button
