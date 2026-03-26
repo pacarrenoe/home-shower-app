@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import styles from './AdminItemModal.module.css'
 import type { Item, ItemOption } from '../types/item.types'
-import { uploadImage } from '../services/upload.service'
 
 type Props = {
   isOpen: boolean
