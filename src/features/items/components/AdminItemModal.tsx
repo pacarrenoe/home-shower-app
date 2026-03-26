@@ -138,31 +138,12 @@ export default function AdminItemModal({
             onChange={(event) => setName(event.target.value)}
           />
 
-          <div className={styles.block}>
-            <label className={styles.fileInput}>
-              Subir imagen
-              <input
-                type="file"
-                accept="image/*"
-                style={{ display: 'none' }}
-                onChange={async (e) => {
-                  const file = e.target.files?.[0]
-                  if (!file) return
-
-                  setLoading(true)
-
-                  try {
-                    const url = await uploadImage(file)
-                    setImage(url)
-                  } finally {
-                    setLoading(false)
-                  }
-                }}
-              />
-            </label>
-
-            {image && <img src={image} className={styles.preview} />}
-          </div>
+          <input
+            className={styles.input}
+            placeholder="URL imagen (ej: https://...)"
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+          />
 
           <textarea
             className={styles.textarea}
